@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head.html"></head>
+<body>
+<div class="page-wrap">
+  <nav th:include="partials/navbar.html"></nav>
+  <main class="main">
+    <h1>Guess a number between 1 and 6.</h1>
+    <h2>To make your selection, enter the number at the end of the address bar.</h2>
+    <div class="return-message">
+      <p th:text="${n}"></p>
+      <p th:text="${randomNumber}"></p>
+      <p th:text="${result}"></p>
+    </div>
+  </main>
+  <footer th:include="partials/footer.html"></footer>
+</div>
+</body>
+</html>
