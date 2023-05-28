@@ -10,21 +10,21 @@ public class PostController {
   @GetMapping("/posts")
   @ResponseBody
   public String posts() {
-    return "Posts index page";
+    return "posts";
   }
-    @GetMapping("/posts/{id}")
+    @GetMapping("/posts/show")
   @ResponseBody
-  public String postsId(@PathVariable int id) {
-    return "Posts index page number " + ": " + id + ".";
+  public String showPosts() {
+    return "posts";
   }
     @GetMapping("/posts/create")
   @ResponseBody
   public String postsViewCreateForm() {
-    return "Posts index page";
+    return "posts";
   }
     @PostMapping("/posts/create")
   @ResponseBody
   public String postsCreate() {
-    return "Create new posts.";
+    return "posts";
   }
 }
