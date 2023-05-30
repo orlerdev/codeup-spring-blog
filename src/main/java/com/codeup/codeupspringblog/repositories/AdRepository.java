@@ -1,4 +1,4 @@
-package com.codeup.codeupspringblog.dao;
+package com.codeup.codeupspringblog.repositories;
 import com.codeup.codeupspringblog.models.Ad;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
