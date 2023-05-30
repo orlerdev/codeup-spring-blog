@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/head.html"></head>
+<!--suppress HtmlRequiredTitleElement -->
+<head th:include="partials/head.html">
+</head>
 <body>
 <div class="page-wrap">
-  <nav th:include="partials/navbar.html"></nav>
-  <main class="main">
+    <nav th:include="partials/navbar.html"></nav>
+    <main class="main">
 
-  </main>
-  <footer th:include="partials/footer.html"></footer>
+    </main>
+    <footer th:include="partials/footer.html"></footer>
 </div>
 </body>
 </html>

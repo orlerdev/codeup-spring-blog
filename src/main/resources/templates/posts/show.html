@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--suppress HtmlRequiredTitleElement -->
+<head th:replace="partials/head.html"></head>
+<body>
+<div class="page-wrap">
+  <nav th:include="partials/navbar.html"></nav>
+  <main class="main">
+    <div th:text="${post.getUser().getEmail()}"></div>
+  </main>
+  <footer th:include="partials/footer.html"></footer>
+</div>
+</body>
+</html>
