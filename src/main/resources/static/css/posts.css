@@ -1,0 +1,27 @@
+.list-wrap{
+    display:flex;
+    flex-direction: column;
+    height:80vh;
+    width:80vw;
+    padding: 60px;
+    align-items: stretch;
+    row-gap: 15px;
+}
+
+h1 {
+    text-align: center;
+    font-size: xxx-large;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.list-wrap li {
+    box-shadow: 0 0 2px #1f75aa;
+    width: 100%;
+    min-height: 125px;
+    padding: 5px 20px;
+}
+
+.list-wrap li p {
+    font-size: large;
+}

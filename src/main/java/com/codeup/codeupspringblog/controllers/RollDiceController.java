@@ -14,7 +14,7 @@ public class RollDiceController {
   }
 
   @GetMapping("/roll-dice/{n}")
-  public String rollDiceNums(@PathVariable int n, String result, Model model) {
+  public String rollDiceNums(@PathVariable int n, Model model) {
   int randomNumber = randomNum(1, 6);
     if (n <= 0 || n > 6) {
       model.addAttribute("n", "You selected " + n + "." + " You must select a number between 1 and 6.");
