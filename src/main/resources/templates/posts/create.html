@@ -3,14 +3,14 @@
 <!--suppress HtmlRequiredTitleElement -->
 <head>
     <meta charset="UTF-8">
-    <title>Post-O-Matic</title>
+    <title>Create a Post</title>
 </head>
 <body>
-<nav th:include="partials/navbar.html"></nav>
+<nav th:insert="partials/navbar.html"></nav>
 <div class="page-wrap">
     <main>
         <h2>Create a Post</h2>
-        <form action="/create" method="post">
+        <form action="/posts/create" method="post">
             <label for="title">Title:</label>
             <input id="title" name="title" type="text">
             <label for="body">Body:</label>
@@ -19,5 +19,6 @@
         </form>
     </main>
 </div>
+<footer th:insert="partials/footer.html"></footer>
 </body>
 </html>

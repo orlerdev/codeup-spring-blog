@@ -9,23 +9,12 @@
 <h1>Register Account</h1>
 <form action="/register" method="post"
       style="display: flex; flex-direction: column; max-width: 360px; max-height: 400px; justify-content:space-between; align-items:stretch; row-gap: 10px;">
-    <label>
-        <span>Username:</span>
-        <input id="username" name="username" type="text">
-    </label>
-    <label>
-        <span>Email:</span>
-        <input id="email" name="email" type="email">
-    </label>
-    <label>
-        <span>Password:</span>
-        <input id="password" name="password" type="password">
-    </label>
-    <label>
-        <span>Username:</span>
-        <input id="password-confirm" name="password-confirm" type="password">
-    </label>
+    <label for="username">Username:</label>
+    <input id="username" name="username" type="text">
+    <label for="email">Email:</label>
+    <input id="email" name="email" type="text">
     <input type="submit" value="Register">
 </form>
+<footer th:insert="partials/footer.html"></footer>
 </body>
 </html>

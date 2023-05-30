@@ -7,18 +7,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class UserController {
+public class UserController{
+  private final UserRepository usersDao;
 
-  public UserController(UserRepository userDao) {}
+  public UserController(UserRepository usersDao){
+    this.usersDao = usersDao;
+  }
 
   @GetMapping("/register")
-  public String registration() {
+  public String registration(){
     return "/register";
   }
 
   @PostMapping("/register")
-  public String registerUser(@RequestParam(name = "username") String username, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
-    User user = new User(username, email, password);
+  public String registerUser(@RequestParam(name="username") String username,@RequestParam(name="email") String email,@RequestParam(name="password") String password){
+    User user = new User(username,email,password);
+    usersDao.save(user);
     return "redirect:/posts";
   }
 }
