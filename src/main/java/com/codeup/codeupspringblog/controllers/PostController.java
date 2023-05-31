@@ -9,48 +9,51 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class PostController{
-    private final PostsRepository postsDao;
+    public User randomUser(UserRepository usersDao){
+        List<User> allUsers = usersDao.findAll();
+        int randomInt = new Random().nextInt(allUsers.size());
+        return allUsers.get(randomInt);
+    }
+
+    private final PostsRepository postDao;
     private final UserRepository userDao;
 
     public PostController(PostsRepository postsDao, UserRepository userDao){
-        this.postsDao = postsDao;
+        this.postDao = postsDao;
         this.userDao = userDao;
     }
 
     @GetMapping("/posts")
     public String allPosts(Model model){
-        List<Post> posts = postsDao.findAll();
+        List<Post> posts = postDao.findAll();
         model.addAttribute("posts", posts);
         return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
     public String singlePost(@PathVariable long id, Model model){
-        Post post = postsDao.findById(id);
+        User user = randomUser(userDao);
+        Post post = postDao.findById(id);
         model.addAttribute("post", post);
+        model.addAttribute("username", "Post author: " + user.getUsername());
         return "posts/show";
     }
 
     @GetMapping("/posts/create")
-    public String showForm(Model model){
-        User user = userDao.getUserByUsernameIs("example_user");
-        String username = "example_user";
-        postsDao.getAllByUser_Username(user.getUsername());
-        model.addAttribute("username", "Posted by " + ":" + username);
+    public String createPostForm(){
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
     public String submitForm(@RequestParam(name="title") String title, @RequestParam(name="body") String body){
-        Post post = new Post(title, body);
-        User user = userDao.getUserByUsernameIs("example_user");
-        userDao.save(user);
-        postsDao.getAllByUser_Username(user.getUsername());
-        postsDao.save(post);
-        return "redirect:/posts";
+        User user = randomUser(userDao);
+        Post post = new Post(title, body, user);
+        postDao.save(post);
+        return "redirect:/user_posts";
     }
 
 }

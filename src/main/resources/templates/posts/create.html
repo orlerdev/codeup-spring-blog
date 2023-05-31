@@ -1,38 +1,36 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/reset.css}">
-    <link rel="stylesheet" th:href="@{/css/global.css}">
-    <link rel="stylesheet" th:href="@{/css/forms.css}">
-    <title></title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/css/reset.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+  <link rel="stylesheet" th:href="@{/css/forms.css}">
+  <title></title>
 </head>
 <body>
-<nav th:insert="partials/navbar.html"></nav>
 <div class="page-wrap">
-    <div class="page-wrap">
-        <div class="container">
-            <div class="row">
-                <div class="column">
-                    <form action="/posts/create" method="post">
-                        <h2>Create a Post</h2>
-                        <div class="form-wrap">
-                            <div class="form-group">
-                                <label for="title">Title:</label>
-                                <input id="title" name="title" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label for="body">Body:</label>
-                                <textarea id="body" name="body" rows="10" cols="35"></textarea>
-                            </div>
-                        </div>
-                        <button type="submit" value="submit">Create</button>
-                    </form>
-                </div>
+  <nav th:insert="partials/navbar.html"></nav>
+  <div class="container">
+    <div class="row">
+      <div class="column">
+        <form action="/posts/create" method="post">
+          <h2>Create a Post</h2>
+          <div class="form-wrap">
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input id="title" name="title" type="text" autofocus>
             </div>
-        </div>
+            <div class="form-group">
+              <label for="body">Body:</label>
+              <textarea id="body" name="body" rows="10" cols="35"></textarea>
+            </div>
+          </div>
+          <button type="submit" value="submit">Create</button>
+        </form>
+      </div>
     </div>
+  <footer th:insert="partials/footer.html"></footer>
+  </div>
 </div>
-<footer th:insert="partials/footer.html"></footer>
 </body>
 </html>

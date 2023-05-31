@@ -2,7 +2,9 @@ package com.codeup.codeupspringblog.controllers;
 import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,5 +26,13 @@ public class UserController{
     User user = new User(username,email,password);
     usersDao.save(user);
     return "redirect:/posts";
+  }
+
+  @GetMapping("/posts/user/{id}/posts")
+  public String userPosts(@PathVariable long id, Model model) {
+    User user = usersDao.findUserById(id);
+    model.addAttribute("userPosts", user.getPosts());
+    model.addAttribute("username", user.getUsername() + "'s" + " Posts");
+    return "/posts/user_posts";
   }
 }

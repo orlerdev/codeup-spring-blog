@@ -36,7 +36,16 @@ a:hover {
     border-bottom: 1px solid #1f75aa;
 }
 
+nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     justify-content: center;
     text-align: center;
 }

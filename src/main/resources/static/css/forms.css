@@ -1,19 +1,24 @@
 form {
-    display:flex;
-    flex-direction:column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     row-gap: 15px;
     align-items: stretch;
     max-width: 800px;
     width: 100%;
     max-height: 600px;
-    height:100%;
+    height: 100%;
     padding: 20px;
-    box-shadow: 0 0 20px #1f75aa
+    background: rgba(255,255,255,.5);
+    box-shadow: inset 0 0 3px #1f75aa
 }
 
 .form-wrap {
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
@@ -22,15 +27,16 @@ form {
 }
 
 .form-group {
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: stretch;
 }
 
 h2 {
     font-size: xx-large;
+    font-weight: 200;
     align-self: center;
-    text-decoration: underline;
+    color: #1f75aa;
 }
 
 button {
