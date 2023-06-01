@@ -20,6 +20,8 @@ public class User{
     private String password;
     @OneToMany(cascade=CascadeType.PERSIST)
     private List<Post> posts;
+    @OneToMany(cascade=CascadeType.PERSIST)
+    private List<Comment> comments;
 
     public User(long id, String username, String email, List<Post> posts){
         this.id = id;

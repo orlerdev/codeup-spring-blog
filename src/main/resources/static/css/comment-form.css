@@ -1,0 +1,18 @@
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, .8);
+    z-index: 2;
+}
+
+.comment-modal-form {
+    z-index: 3;
+    background: rgba(255, 255, 255, .3);
+}
+
+.comment-modal-form textarea {
+    background: rgba(255, 255, 255, .3);
+}

@@ -9,23 +9,42 @@
 </head>
 <body>
 <div class="page-wrap">
-  <nav th:include="partials/navbar.html"></nav>
+  <nav th:include="~{partials/navbar.html}"></nav>
+  <div th:insert="~{partials/comment-modal.html}"></div>
   <div class="container">
     <div class="row">
       <div class="column">
-        <h1 th:text="${post.title}"></h1>
-        <div class="list-wrap">
-          <ul>
-            <li class="single-post-li">
-              <p th:text="${post.body}"></p>
-              <p th:text="${username}"></p>
-            </li>
-          </ul>
+        <div class="comment-modal hidden" th:fragment="comment-modal">
+          <div class="overlay"></div>
+          <form class="comment-modal-form" th:action="@{/posts/show}" method="post">
+            <h2>Leave Your Comment</h2>
+            <div class="form-wrap">
+              <div class="form-group">
+                <label for="content">Comment:</label>
+                <textarea id="content" name="content" rows="10" cols="35" autofocus></textarea>
+              </div>
+            </div>
+            <input type="hidden" name="postId">
+            <button type="submit" value="submit">Leave Comment</button>
+          </form>
+          <h1 th:text="${post.title}"></h1>
+          <p th:text="${post.body}"></p>
+          <div class="list-wrap">
+            <div th:if="${post.comments.size() > 0}">
+              <ul th:each="comment : ${comments}">
+                <li>
+                  <p th:text="${comment.content}"></p>
+                  <input type="hidden" name="post-id" class="post-id" th:value="${post.id}">
+                  <button class="open-modal-btn">Leave A Comment</button>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <footer th:insert="~{partials/footer.html}"></footer>
   </div>
-  <footer th:insert="partials/footer.html"></footer>
-</div>
+  <div th:insert="~{partials/javascript.html}"></div>
 </body>
 </html>

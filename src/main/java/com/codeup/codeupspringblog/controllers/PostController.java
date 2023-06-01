@@ -1,59 +1,89 @@
 package com.codeup.codeupspringblog.controllers;
 
+import com.codeup.codeupspringblog.models.Comment;
 import com.codeup.codeupspringblog.models.Post;
 import com.codeup.codeupspringblog.models.User;
-import com.codeup.codeupspringblog.repositories.PostsRepository;
+import com.codeup.codeupspringblog.repositories.CommentRepository;
+import com.codeup.codeupspringblog.repositories.PostRepository;
 import com.codeup.codeupspringblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 public class PostController{
-    public User randomUser(UserRepository usersDao){
-        List<User> allUsers = usersDao.findAll();
-        int randomInt = new Random().nextInt(allUsers.size());
-        return allUsers.get(randomInt);
-    }
+public User randomUser(UserRepository usersDao){
+	List<User> allUsers = usersDao.findAll();
+	int randomInt = new Random().nextInt(allUsers.size());
+	return allUsers.get(randomInt);
+}
 
-    private final PostsRepository postDao;
-    private final UserRepository userDao;
+private final PostRepository postsDao;
+private final UserRepository usersDao;
+private final CommentRepository commentsDao;
 
-    public PostController(PostsRepository postsDao, UserRepository userDao){
-        this.postDao = postsDao;
-        this.userDao = userDao;
-    }
+public PostController(PostRepository postsDao, UserRepository userDao, CommentRepository commentDao){
+	this.postsDao = postsDao;
+	this.usersDao = userDao;
+	this.commentsDao = commentDao;
+}
 
-    @GetMapping("/posts")
-    public String allPosts(Model model){
-        List<Post> posts = postDao.findAll();
-        model.addAttribute("posts", posts);
-        return "posts/index";
-    }
+//    /////////////////////////
+//    UTILIZE A <SET> TO RESTRICT A POST HAVING UNIQUE COMMENTS
+//    PREVENTS DUPLICATE COMMENTS
+//    /////////////////////////
+public Set<Comment> createCommentsSet(String comments){
+	// CREATE AN EMPTY LIST OF COMMENTS
+	Set<Comment> commentsSet = new HashSet<>();
+	// IF THE USER ENTERS NOTHING, RETURN THE EMPTY SET
+	if(comments.equals("")){
+		return commentsSet;
+	}
+	// CREATE AN ARRAY OF STRINGS, AND ITERATE THROUGH IT
+	for(String comment : comments.split(",")){
+		Comment singleComment = new Comment(comment.trim());
+		commentsSet.add(singleComment);
+	}
+	return commentsSet;
+}
 
-    @GetMapping("/posts/{id}")
-    public String singlePost(@PathVariable long id, Model model){
-        User user = randomUser(userDao);
-        Post post = postDao.findById(id);
-        model.addAttribute("post", post);
-        model.addAttribute("username", "Post author: " + user.getUsername());
-        return "posts/show";
-    }
 
-    @GetMapping("/posts/create")
-    public String createPostForm(){
-        return "posts/create";
-    }
+@GetMapping("/posts")
+public String allPosts(Model model){
+	List<Post> posts = postsDao.findAll();
+	model.addAttribute("posts", posts);
+	return "posts/index";
+}
 
-    @PostMapping("/posts/create")
-    public String submitForm(@RequestParam(name="title") String title, @RequestParam(name="body") String body){
-        User user = randomUser(userDao);
-        Post post = new Post(title, body, user);
-        postDao.save(post);
-        return "redirect:/user_posts";
-    }
+@GetMapping("/posts/{id}")
+public String singlePost(@PathVariable long id, Model model){
+	Post post = postsDao.findById(id);
+	model.addAttribute("post", post);
+	return "posts/show";
+}
 
+@GetMapping("/posts/create")
+public String createPostForm(){
+	return "posts/create";
+}
+
+@PostMapping("/posts/create")
+public String submitForm(@RequestParam(name="title") String title, @RequestParam(name="body") String body){
+	User user = randomUser(usersDao);
+	Post post = new Post(title, body, user);
+	postsDao.save(post);
+	return "redirect:/user_posts";
+}
+
+@GetMapping("/partials/comment-modal.html")
+public String createCommentForm() {
+	return "/partials/comment-modal";
+}
+
+@PostMapping("/posts/create_comment")
+public String createComment(@ModelAttribute Comment comment) {
+	return "redirect:/posts/show";
+}
 }

@@ -46,3 +46,8 @@ button {
     background: #1f75aa;
     color: #fff;
 }
+
+.open-modal-btn{
+    width: 200px;
+    align-self: flex-end;
+}
