@@ -13,7 +13,7 @@ form {
     max-height: 600px;
     height: 100%;
     padding: 20px;
-    background: rgba(255,255,255,.5);
+    background: rgba(255, 255, 255, .5);
     box-shadow: inset 0 0 3px #1f75aa
 }
 
@@ -29,7 +29,12 @@ form {
 .form-group {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    /*align-items: stretch;*/
+}
+
+/* CREATES "SPLIT" ATTRIBUTE WITH VALUE OF "1/2" TO FORM-GROUP, WHICH ALLOWS THE FORM TO HAVE 2 INPUTS PER ROW */
+.form-group[split="1/2"] {
+    width: calc(50% - 5px);
 }
 
 h2 {
@@ -47,7 +52,25 @@ button {
     color: #fff;
 }
 
-.open-modal-btn{
-    width: 200px;
-    align-self: flex-end;
+input, textarea {
+    display: flex;
+    flex-direction: column;
+    min-height: 40px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, .3);
+    outline: unset;
+    border: unset;
+    color: inherit;
+    font-family: inherit;
+    transition: all ease-in .3s;
+}
+
+input:focus, textarea:focus {
+    outline: unset;
+    box-shadow: inset 0 0 3px #1f75aa;
+    background: rgba(0,0,0,.4);
+}
+
+textarea {
+    resize: none;
 }

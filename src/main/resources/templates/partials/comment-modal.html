@@ -1,15 +1,12 @@
-<link rel="stylesheet" th:href="@{/css/reset.css}">
-<link rel="stylesheet" th:href="@{/css/global.css}">
-<link rel="stylesheet" th:href="@{/css/forms.css}">
-<link rel="stylesheet" th:href="@{/css/comment-form.css}">
+<head th:replace="~{partials/head.html}"></head>
 <div class="comment-modal hidden" th:fragment="comment-modal">
   <div class="overlay"></div>
-  <form class="comment-modal-form" th:action="@{/posts/show}" method="post">
+  <form class="comment-modal-form" th:action="@{/partials/comment-modal}" th:object="${comment}" method="post">
     <h2>Leave Your Comment</h2>
     <div class="form-wrap">
       <div class="form-group">
         <label for="content">Comment:</label>
-        <textarea id="content" name="content" rows="10" cols="35" autofocus></textarea>
+        <textarea th:field="*{content}" th:value="*{content}" id="content" name="content" rows="10" cols="35" autofocus></textarea>
       </div>
     </div>
     <input type="hidden" name="postId">

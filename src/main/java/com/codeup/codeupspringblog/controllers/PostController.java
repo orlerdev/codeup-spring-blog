@@ -14,11 +14,6 @@ import java.util.*;
 
 @Controller
 public class PostController{
-public User randomUser(UserRepository usersDao){
-	List<User> allUsers = usersDao.findAll();
-	int randomInt = new Random().nextInt(allUsers.size());
-	return allUsers.get(randomInt);
-}
 
 private final PostRepository postsDao;
 private final UserRepository usersDao;
@@ -30,26 +25,6 @@ public PostController(PostRepository postsDao, UserRepository userDao, CommentRe
 	this.commentsDao = commentDao;
 }
 
-//    /////////////////////////
-//    UTILIZE A <SET> TO RESTRICT A POST HAVING UNIQUE COMMENTS
-//    PREVENTS DUPLICATE COMMENTS
-//    /////////////////////////
-public Set<Comment> createCommentsSet(String comments){
-	// CREATE AN EMPTY LIST OF COMMENTS
-	Set<Comment> commentsSet = new HashSet<>();
-	// IF THE USER ENTERS NOTHING, RETURN THE EMPTY SET
-	if(comments.equals("")){
-		return commentsSet;
-	}
-	// CREATE AN ARRAY OF STRINGS, AND ITERATE THROUGH IT
-	for(String comment : comments.split(",")){
-		Comment singleComment = new Comment(comment.trim());
-		commentsSet.add(singleComment);
-	}
-	return commentsSet;
-}
-
-
 @GetMapping("/posts")
 public String allPosts(Model model){
 	List<Post> posts = postsDao.findAll();
@@ -59,31 +34,66 @@ public String allPosts(Model model){
 
 @GetMapping("/posts/{id}")
 public String singlePost(@PathVariable long id, Model model){
-	Post post = postsDao.findById(id);
+	Post post = postsDao.findPostById(id);
 	model.addAttribute("post", post);
 	return "posts/show";
 }
 
 @GetMapping("/posts/create")
-public String createPostForm(){
+public String createPostForm(Model model){
+	model.addAttribute("post", new Post());
 	return "posts/create";
 }
 
+@GetMapping("/posts/create-comment")
+public String createCommentForm(@RequestParam(name="content") String content, Model model){
+	model.addAttribute("comment", new Comment());
+	model.addAttribute("content", content);
+	return "/posts/index";
+}
+
+@PostMapping("/partials/comment-modal")
+public String createCommentModal(@ModelAttribute Comment comment, Model model){
+	comment.setContent(comment.getContent());
+	commentsDao.save(comment);
+	return "/posts/index";
+}
+
+@GetMapping("/posts/edit")
+public String editPostForm(Model model){
+	model.addAttribute("post", new Post());
+	return "/posts/edit";
+}
+
 @PostMapping("/posts/create")
-public String submitForm(@RequestParam(name="title") String title, @RequestParam(name="body") String body){
-	User user = randomUser(usersDao);
-	Post post = new Post(title, body, user);
+public String submitForm(@ModelAttribute Post post){
+	User user = usersDao.findUserById(1L);
+	post.setUser(user);
 	postsDao.save(post);
-	return "redirect:/user_posts";
+	return "redirect:/posts";
 }
 
-@GetMapping("/partials/comment-modal.html")
-public String createCommentForm() {
-	return "/partials/comment-modal";
+@PostMapping("/posts/edit")
+public String editForm(
+		@RequestParam(name="title") String title,
+		@RequestParam(name="body") String body,
+		@RequestParam(name="postId") Long postId){
+	User user = usersDao.findUserById(1L);
+	Post post = postsDao.findPostById(postId);
+	if(post != null){
+		postsDao.setPostById(postId, title, body);
+	} else{
+		Post newPost = new Post(title, body);
+		postsDao.save(newPost);
+	}
+	return "redirect:/posts";
 }
 
-@PostMapping("/posts/create_comment")
-public String createComment(@ModelAttribute Comment comment) {
-	return "redirect:/posts/show";
+@PostMapping("/posts/create-comment")
+public String createComment(@ModelAttribute Comment comment){
+	User user = usersDao.findUserById(1L);
+	comment.setContent(comment.getContent());
+	commentsDao.save(comment);
+	return "redirect:/posts";
 }
 }

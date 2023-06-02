@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 body {
-    background: rgba(0, 0, 0, .3);
-    font-family: sans-serif;
+    background: rgba(0, 0, 0, .4);
+    font-family: 'Inter',sans-serif;
 }
 
 .hidden {
@@ -16,12 +18,16 @@ body {
 .container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 0;
 }
 
 .row {
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 1200px;
     flex: 1 0 0;
 }
 
@@ -33,3 +39,4 @@ body {
     max-height: 100vh;
     padding: 80px;
 }
+

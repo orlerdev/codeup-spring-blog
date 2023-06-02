@@ -1,51 +1,49 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Posts</title>
-  <link rel="stylesheet" th:href="@{/css/reset.css}">
-  <link rel="stylesheet" th:href="@{/css/global.css}">
-  <link rel="stylesheet" th:href="@{/css/posts.css}">
-  <link rel="stylesheet" th:href="@{/css/forms.css}">
-  <link rel="stylesheet" th:href="@{/css/comment-form.css}">
-
-</head>
+<head th:replace="~{partials/head.html}"></head>
 <body>
 <div class="page-wrap">
   <nav th:insert="~{partials/navbar.html}"></nav>
   <div class="container">
     <div class="row">
       <div class="column">
-        <div class="comment-modal hidden">
-          <div class="overlay"></div>
-          <form class="comment-modal-form" th:action="@{/posts/show}" method="post">
-            <h2>Leave Your Comment</h2>
-            <div class="form-wrap">
-              <div class="form-group">
-                <label for="content">Comment:</label>
-                <textarea id="content" name="content" rows="10" cols="35" autofocus></textarea>
-              </div>
-            </div>
-            <input type="hidden" name="postId">
-            <button type="submit" value="submit">Leave Comment</button>
-          </form>
-          <h1>All Posts</h1>
-          <div class="list-wrap">
-            <ul th:each="post : ${posts}">
-              <li>
-                <a th:href="@{|/posts/${post.id}|}"><h2 th:text="${post.title}"></h2></a>
-                <p th:text="${post.body}"></p>
-                <p th:text="${post.user.email}"></p>
+        <h1>All Posts</h1>
+        <div class="list-wrap">
+          <ul th:each="post : ${posts}">
+            <li>
+              <a th:href="@{|/posts/${post.id}|}"><h2 th:text="${post.title}"></h2></a>
+              <p th:text="${post.body}"></p>
+              <p th:text="${post.user.email}"></p>
+              <div class="button-group">
+                <a th:href="@{/posts/edit}">
+                  <button class="edit-post-btn">Edit Post</button>
+                </a>
                 <button class="open-modal-btn">Leave A Comment</button>
-                <input type="hidden" name="post-id" class="post-id" th:value="${post.id}">
-              </li>
-            </ul>
-          </div>
+              </div>
+              <input type="hidden" name="post-id" class="post-id" th:value="${post.id}">
+              <div class="comment-modal hidden">
+                <div class="overlay"></div>
+                <form class="comment-modal-form" th:action="@{/posts}" method="post">
+                  <h2>Leave Your Comment</h2>
+                  <div class="form-wrap">
+                    <div class="form-group">
+                      <label for="content">Comment:</label>
+                      <textarea id="content" th:value="*{content}" name="content" rows="10" cols="35"
+                                autofocus></textarea>
+                    </div>
+                  </div>
+                  <input type="hidden" name="postId" th:value="${post.id}">
+                  <button type="submit" value="submit">Leave Comment</button>
+                </form>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
+      <footer th:insert="~{partials/footer.html}"></footer>
     </div>
-    <footer th:insert="~{partials/footer.html}"></footer>
   </div>
-  <div th:insert="~{partials/javascript.html}"></div>
+</div>
+<div th:insert="~{partials/javascript.html}"></div>
 </body>
 </html>
