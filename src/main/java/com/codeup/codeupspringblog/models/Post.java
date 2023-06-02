@@ -14,7 +14,7 @@ public class Post{
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
 private long id;
-@Column(nullable=false, length=50)
+@Column(nullable=false, length=500)
 private String title;
 @Column(nullable=false, length=500)
 private String body;
